@@ -1,0 +1,386 @@
+﻿<Window x:Class="CybersecurityChatbott.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CyberBot - Cybersecurity Awareness Assistant"
+        Height="650"
+        Width="950"
+        Background="#071422"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+
+        <Style TargetType="Button" x:Key="AccentButton">
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#FF2B6FA5" Offset="0"/>
+                        <GradientStop Color="#FF1E5A8A" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+
+        <Style TargetType="TextBox" x:Key="InputBox">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Background" Value="#FF0F2432"/>
+            <Setter Property="BorderBrush" Value="#FF2B6FA5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+
+        <Style TargetType="RichTextBox" x:Key="ChatDisplay">
+            <Setter Property="Background" Value="#FF071422"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+    </Window.Resources>
+
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- Background -->
+        <Rectangle x:Name="BgRect"
+                   Grid.RowSpan="3">
+
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="1,1">
+
+                    <GradientStop Color="#FF0D1B2A"
+                                  Offset="0"/>
+
+                    <GradientStop Color="#FF123049"
+                                  Offset="0.5"/>
+
+                    <GradientStop Color="#FF1B3B5A"
+                                  Offset="1"/>
+
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+
+        </Rectangle>
+
+
+        <!-- HEADER -->
+        <Border Grid.Row="0"
+                Background="#0F2432"
+                CornerRadius="12"
+                Padding="15"
+                Margin="0,0,0,10">
+
+            <StackPanel>
+
+                <TextBlock Text="🔐 CYBERBOT SECURITY ASSISTANT"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#4FC3F7"
+                           HorizontalAlignment="Center"/>
+
+
+                <TextBlock Text="Cybersecurity awareness • Threat education • Safe online habits"
+                           FontSize="13"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           Margin="0,5,0,0"/>
+
+            </StackPanel>
+
+        </Border>
+
+
+
+        <!-- MAIN TABS -->
+        <TabControl Grid.Row="1">
+
+
+            <!-- CHAT TAB -->
+            <TabItem Header="Chat">
+
+                <RichTextBox Name="rtbChatDisplay"
+                             IsReadOnly="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Style="{StaticResource ChatDisplay}"/>
+
+            </TabItem>
+
+
+
+            <!-- TASK TAB -->
+            <TabItem Header="Tasks">
+
+                <Grid Margin="8">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBox Name="txtTaskTitle"
+                                 Width="200"
+                                 Margin="0,0,8,0"/>
+
+
+                        <TextBox Name="txtTaskDesc"
+                                 Width="300"
+                                 Margin="0,0,8,0"/>
+
+
+                        <TextBox Name="txtTaskReminder"
+                                 Width="180"
+                                 Margin="0,0,8,0"/>
+
+
+                        <Button Name="btnAddTask"
+                                Content="Add Task"
+                                Click="btnAddTask_Click"
+                                Style="{StaticResource AccentButton}"/>
+
+                    </StackPanel>
+
+
+
+                    <ListBox Name="lstTasks"
+                             Grid.Row="1"
+                             Background="#0F2432"
+                             Foreground="White"
+                             FontSize="14"
+                             BorderThickness="0"
+                             Margin="0,10,0,10"/>
+
+
+
+                    <StackPanel Grid.Row="2"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+
+
+                        <Button Name="btnMarkComplete"
+                                Content="Mark Complete"
+                                Click="btnMarkComplete_Click"
+                                Style="{StaticResource AccentButton}"
+                                Margin="0,0,8,0"/>
+
+
+                        <Button Name="btnDeleteTask"
+                                Content="Delete"
+                                Click="btnDeleteTask_Click"
+                                Style="{StaticResource AccentButton}"/>
+
+
+                    </StackPanel>
+
+
+                </Grid>
+
+            </TabItem>
+
+
+
+            <!-- QUIZ TAB -->
+            <TabItem Header="Quiz">
+
+                <Grid Margin="12">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <TextBlock Name="txtQuizScore"
+                               Text="Score: 0/15"
+                               Foreground="#4FC3F7"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Right"/>
+
+               
+                    <Border Grid.Row="1"
+                            Background="#0F1F2A"
+                            Padding="10"
+                            CornerRadius="6"
+                            Margin="0,8,0,8">
+
+                        <TextBlock Name="txtQuizQuestion"
+                                   Text="Question will appear here"
+                                   TextWrapping="Wrap"
+                                   FontSize="16"
+                                   Foreground="White"/>
+
+                    </Border>
+
+
+                    <StackPanel Grid.Row="2"
+                                Name="panelQuizOptions">
+
+
+                        <Button Name="btnOptionA"
+                                Content="A"
+                                Click="btnOption_Click"
+                                Style="{StaticResource AccentButton}"
+                                Margin="0,4"/>
+
+
+                        <Button Name="btnOptionB"
+                                Content="B"
+                                Click="btnOption_Click"
+                                Style="{StaticResource AccentButton}"
+                                Margin="0,4"/>
+
+
+                        <Button Name="btnOptionC"
+                                Content="C"
+                                Click="btnOption_Click"
+                                Style="{StaticResource AccentButton}"
+                                Margin="0,4"/>
+
+
+                        <Button Name="btnOptionD"
+                                Content="D"
+                                Click="btnOption_Click"
+                                Style="{StaticResource AccentButton}"
+                                Margin="0,4"/>
+
+
+                    </StackPanel>
+
+
+
+                    <StackPanel Grid.Row="3"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+
+
+                        <Button Name="btnSubmitAnswer"
+                                Content="Submit Answer"
+                                Click="btnSubmitAnswer_Click"
+                                Style="{StaticResource AccentButton}"
+                                Margin="0,0,8,0"/>
+
+
+                        <Button Name="btnNextQuestion"
+                                Content="Next"
+                                Click="btnNextQuestion_Click"
+                                Style="{StaticResource AccentButton}"
+                                Visibility="Collapsed"
+                                Margin="0,0,8,0"/>
+
+
+                        <Button Name="btnResetQuiz"
+                                Content="Reset Quiz"
+                                Click="btnResetQuiz_Click"
+                                Style="{StaticResource AccentButton}"/>
+
+                    </StackPanel>
+
+
+                </Grid>
+
+            </TabItem>
+
+
+
+            <!-- ACTIVITY TAB -->
+            <TabItem Header="Activity">
+
+                <Grid>
+
+                    <TextBlock Name="txtActivityLog"
+                               Text="Activity log will be shown here"
+                               Foreground="White"
+                               TextWrapping="Wrap"
+                               Margin="10"/>
+
+                </Grid>
+
+            </TabItem>
+
+
+        </TabControl>
+
+
+
+        <!-- INPUT AREA -->
+
+        <Grid Grid.Row="2"
+              Margin="0,5,0,0">
+
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+
+            </Grid.ColumnDefinitions>
+
+
+
+            <TextBox Name="txtUserInput"
+                     Grid.Column="0"
+                     Style="{StaticResource InputBox}"
+                     KeyDown="txtUserInput_KeyDown"/>
+
+
+
+            <Button Grid.Column="1"
+                    Content="Send"
+                    Click="btnSend_Click"
+                    Style="{StaticResource AccentButton}"/>
+
+
+            <Button Grid.Column="2"
+                    Content="Clear"
+                    Click="btnClear_Click"
+                    Style="{StaticResource AccentButton}"/>
+
+
+            <Button Grid.Column="3"
+                    Content="Save"
+                    Click="btnSave_Click"
+                    Style="{StaticResource AccentButton}"/>
+
+
+            <Button Grid.Column="4"
+                    Content="Load"
+                    Click="btnLoad_Click"
+                    Style="{StaticResource AccentButton}"/>
+
+
+            <Button Grid.Column="5"
+                    Content="Export"
+                    Click="btnExport_Click"
+                    Style="{StaticResource AccentButton}"/>
+
+
+        </Grid>
+
+
+    </Grid>
+
+
+</Window>           
+                    
+                    
